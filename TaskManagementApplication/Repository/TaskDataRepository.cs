@@ -5,7 +5,7 @@ using TaskManagementApplication.Models;
 
 namespace TaskManagementApplication.Repository
 {
-    public class TaskDataRepository
+    public class TaskDataRepository : ITaskDataRepository
     {
         private readonly AppDbContext db;
         public TaskDataRepository(AppDbContext dbContext)

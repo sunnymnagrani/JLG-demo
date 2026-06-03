@@ -42,8 +42,6 @@ namespace TaskManagementApplication
 
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             await httpContext.Response.WriteAsync(JsonSerializer.Serialize(responsePayload, options), cancellationToken);
-
-            // Return true to indicate that this exception has been successfully handled
             return true;
         }
     }

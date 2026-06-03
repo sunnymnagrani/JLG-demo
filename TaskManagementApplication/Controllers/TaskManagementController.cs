@@ -9,8 +9,8 @@ namespace TaskManagementApplication.Controllers
     [ApiController]
     public class TaskManagementController : ControllerBase
     {
-        private readonly TaskDataRepository taskDataRepository;
-        public TaskManagementController(TaskDataRepository taskDataRepository)
+        private readonly ITaskDataRepository taskDataRepository;
+        public TaskManagementController(ITaskDataRepository taskDataRepository)
         {
             this.taskDataRepository = taskDataRepository;
         }
