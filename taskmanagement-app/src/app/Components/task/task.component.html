@@ -1,0 +1,99 @@
+<div class="container-fluid">
+    <div class="row p-2 bg-info">
+        <div class="col-6">
+            <h3>Task List</h3>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-warning" (click)="openModal()"> Add Task</button>
+        </div>
+    </div>
+    @if (taskList && taskList.length > 0) { <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of taskList; track $index) {
+            <tr>
+                <td>{{ item.taskTitle| uppercase }}</td>
+                <td>{{ item.taskDesc }}</td>
+                <td>{{ item.taskStatus }}</td>
+                <td class="text-center">
+                    <button class="btn btn-primary" (click)="OnEdit(item)"> Edit</button> ||
+                    <button class="btn btn-danger " (click)="onDelete(item)"> Delete</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }@else {
+    <h5 class="text-center p-5">Tasks Not Found</h5>
+    }
+
+
+</div>
+
+<div class="modal" id="myModal" #myModal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-info">
+                @if(taskForm.value.taskId != 0)
+                {
+                <h4 class="modal-title">Update Task</h4>
+                }@else {
+                <h4 class="modal-title">Add Task</h4>
+                }
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModal()"></button>
+            </div>
+            <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" formControlName="taskTitle" name="taskTitle" class="form-control"
+                                placeholder="Title">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <input type="text" formControlName="taskDesc" name="taskDesc" class="form-control"
+                                placeholder="Description">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="form-group form-check">
+                                <input type="checkbox" formControlName="taskStatus" name="taskStatus" class="form-check-input"
+                                    placeholder="Status">
+                                <label> Active ? </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @if (taskForm.value.taskId == 0) {
+                    <button type="submit" [disabled]="this.taskForm.invalid" class="btn btn-primary"
+                        data-bs-dismiss="modal">Save</button>
+                    }@else {
+                    <button type="submit" [disabled]="this.taskForm.invalid" class="btn btn-success"
+                        data-bs-dismiss="modal">Update</button>
+                    }
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                        (click)="closeModal()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
