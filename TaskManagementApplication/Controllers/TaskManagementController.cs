@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using TaskManagementApplication.Models;
 using TaskManagementApplication.Repository;
 
@@ -31,16 +31,12 @@ namespace TaskManagementApplication.Controllers
         }
 
         [HttpPut("{id}")]
+        [DebuggerStepThrough]
         public async Task<ActionResult> updateTask(int id, [FromBody] TaskData td)
         {
             var updatedTask = await taskDataRepository.UpdateTask(id, td);
 
-            if (updatedTask == null)
-            {
-                return NotFound();
-            }
-
-            // Return the fresh database state back to Angular
+            // Return the fresh database state back to frontend
             return Ok(updatedTask);
         }
 

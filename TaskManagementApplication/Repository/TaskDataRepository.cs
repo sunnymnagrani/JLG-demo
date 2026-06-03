@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using TaskManagementApplication.Data;
 using TaskManagementApplication.Models;
 
@@ -25,12 +26,13 @@ namespace TaskManagementApplication.Repository
             return task;
         }
 
+        [DebuggerStepThrough]
         public async Task<TaskData> UpdateTask(int id, TaskData obj)
         {
             var taskData = await db.TaskList.FindAsync(id);
             if (taskData == null)
             {
-                throw new Exception("Task Not Found");
+                throw new KeyNotFoundException("Task Not Found");
             }
             taskData.taskTitle = obj.taskTitle;
             taskData.taskDesc = obj.taskDesc;
@@ -47,7 +49,7 @@ namespace TaskManagementApplication.Repository
             var taskData = await db.TaskList.FindAsync(id);
             if (taskData == null)
             {
-                throw new Exception("Task Not Found");
+                throw new KeyNotFoundException("Task Not Found");
             }
             db.TaskList.Remove(taskData);
             await db.SaveChangesAsync();

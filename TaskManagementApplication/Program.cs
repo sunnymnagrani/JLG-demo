@@ -4,6 +4,10 @@ using TaskManagementApplication.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 1. Add the exception handler
+builder.Services.AddExceptionHandler<TaskManagementApplication.GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -16,6 +20,9 @@ builder.Services.AddScoped<TaskDataRepository>();
 
 var app = builder.Build();
 
+// 2. Add the middleware to the pipeline
+app.UseExceptionHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -24,11 +31,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+app.UseAuthorization();
 
 app.MapControllers();
 
