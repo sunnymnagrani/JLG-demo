@@ -49,8 +49,7 @@ openModal() {
       taskId: [0],
       taskTitle: ['', [Validators.required]],
       taskDesc: ['', [Validators.required]],
-      taskStatus: [false, [Validators.required]]
-
+      taskStatus: [false, [Validators.required]],
     });
   }
 

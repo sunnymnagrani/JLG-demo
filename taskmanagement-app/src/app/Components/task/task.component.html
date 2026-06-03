@@ -13,6 +13,8 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th>Created Dt</th>
+                <th>Updated Dt</th>
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -22,6 +24,8 @@
                 <td>{{ item.taskTitle| uppercase }}</td>
                 <td>{{ item.taskDesc }}</td>
                 <td>{{ item.taskStatus }}</td>
+                <td>{{ item?.createdDate| date:'medium' }}</td>
+                <td>{{ item?.updatedDate | date:'medium'}}</td>
                 <td class="text-center">
                     <button class="btn btn-primary" (click)="OnEdit(item)"> Edit</button> ||
                     <button class="btn btn-danger " (click)="onDelete(item)"> Delete</button>

@@ -3,4 +3,6 @@ export interface Task {
     taskTitle: string;
     taskDesc: string;
     taskStatus: boolean; 
+    createdDate: Date;
+    updatedDate?: Date;
 }
