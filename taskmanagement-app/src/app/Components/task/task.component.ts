@@ -40,7 +40,6 @@ openModal() {
   getTaskList() {
     this.taskService.getAllTasks().subscribe((res) => {
       this.taskList = res;
-      console.log("task list values::"+this.taskList[0].taskId);
     })
   }
 
@@ -64,7 +63,7 @@ openModal() {
       this.formValues = this.taskForm.value;
       this.taskService.addTask(this.formValues).subscribe((res) => {
 
-        alert('Employee Added Successfully');
+        alert('Task Added Successfully');
         this.getTaskList();
         this.taskForm.reset();
         this.closeModal();
@@ -74,7 +73,7 @@ openModal() {
       this.formValues = this.taskForm.value;
       this.taskService.updateTask(this.formValues).subscribe((res) => {
 
-        alert('Employee Updated Successfully');
+        alert('Task Updated Successfully');
         this.getTaskList();
         this.taskForm.reset();
         this.closeModal();
