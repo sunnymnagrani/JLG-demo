@@ -1,0 +1,12 @@
+# Visual Studio cache and user-specific files
+.vs/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
