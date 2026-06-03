@@ -17,13 +17,15 @@ namespace TaskManagementApplication.Repository
             return await db.TaskList.ToListAsync();
         }
 
-        public async Task SaveTask(TaskData task)
+        public async Task<TaskData> SaveTask(TaskData task)
         {
             await db.TaskList.AddAsync(task);
             await db.SaveChangesAsync();
+            // Returns the task with the generated CreatedDate
+            return task;
         }
 
-        public async Task UpdateTask(int id, TaskData obj)
+        public async Task<TaskData> UpdateTask(int id, TaskData obj)
         {
             var taskData = await db.TaskList.FindAsync(id);
             if (taskData == null)
@@ -35,6 +37,8 @@ namespace TaskManagementApplication.Repository
             taskData.taskStatus = obj.taskStatus;
 
             await db.SaveChangesAsync();
+            // Returns the task with the newly generated UpdatedDate
+            return taskData;
 
         }
 

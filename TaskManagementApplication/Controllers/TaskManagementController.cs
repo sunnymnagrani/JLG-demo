@@ -24,17 +24,24 @@ namespace TaskManagementApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTask(TaskData task)
+        public async Task<IActionResult> AddTask([FromBody] TaskData task)
         {
-            await taskDataRepository.SaveTask(task);
-            return Ok();
+            var createdTask = await taskDataRepository.SaveTask(task);
+            return Ok(createdTask);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> updateTask(int id, [FromBody] TaskData td)
         {
-            await taskDataRepository.UpdateTask(id, td);
-            return Ok(td);
+            var updatedTask = await taskDataRepository.UpdateTask(id, td);
+
+            if (updatedTask == null)
+            {
+                return NotFound();
+            }
+
+            // Return the fresh database state back to Angular
+            return Ok(updatedTask);
         }
 
         [HttpDelete("{id}")]

@@ -12,5 +12,8 @@ namespace TaskManagementApplication.Models
         public  string taskDesc { get; set; }
 
         public  bool taskStatus { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }
