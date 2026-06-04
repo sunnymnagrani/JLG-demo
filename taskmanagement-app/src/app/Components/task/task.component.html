@@ -1,13 +1,21 @@
 <div class="container-fluid">
-    <div class="row p-2 bg-info">
-        <div class="col-6">
-            <h3>Task List</h3>
+    <div class="row p-2 bg-info align-items-center">
+        <div class="col-md-6 col-12">
+            <h3 class="m-0 text-white">Task List</h3>
         </div>
-        <div class="col-6 text-end">
-            <button class="btn btn-warning" (click)="openModal()"> Add Task</button>
+        <div class="col-md-6 col-12 d-flex justify-content-end align-items-center gap-2 mt-2 mt-md-0">
+            <label class="text-white mb-0 fw-bold d-none d-sm-inline">Filter:</label>
+            <select class="form-select w-auto" 
+                    [(ngModel)]="selectedFilter" 
+                    (change)="filterTasks()">
+                <option value="All">All Tasks</option>
+                <option value="Active">Active</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <button class="btn btn-warning fw-bold" (click)="openModal()">Add Task</button>
         </div>
     </div>
-    @if (taskList && taskList.length > 0) { <table class="table table-bordered table-striped">
+    @if (filteredTaskList && filteredTaskList.length > 0) {  <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Title</th>
@@ -19,11 +27,15 @@
             </tr>
         </thead>
         <tbody>
-            @for (item of taskList; track $index) {
+           @for (item of filteredTaskList; track $index) {
             <tr>
                 <td>{{ item.taskTitle| uppercase }}</td>
                 <td>{{ item.taskDesc }}</td>
-                <td>{{ item.taskStatus }}</td>
+                <td>
+                    <span class="badge" [ngClass]="item.taskStatus ? 'bg-success' : 'bg-secondary'">
+                        {{ item.taskStatus ? 'Active' : 'Completed' }}
+                    </span>
+                </td>
                 <td>{{ item?.createdDate| date:'medium' }}</td>
                 <td>{{ item?.updatedDate | date:'medium'}}</td>
                 <td class="text-center">

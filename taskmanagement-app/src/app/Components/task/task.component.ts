@@ -1,19 +1,22 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
 import { Task } from '../../Models/task';
 import { TaskService } from '../../Services/task.service';
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
 export class TaskComponent implements OnInit{
   @ViewChild('myModal') model: ElementRef | undefined;
   taskList: Task[] = [];
+  filteredTaskList: Task[] = [];
+  selectedFilter: string = 'All';
   taskService = inject(TaskService);
   taskForm: FormGroup = new FormGroup({});
 
@@ -40,6 +43,7 @@ openModal() {
   getTaskList() {
     this.taskService.getAllTasks().subscribe((res) => {
       this.taskList = res;
+      this.filterTasks();
     })
   }
 
@@ -99,4 +103,13 @@ openModal() {
 
   }
 
+  filterTasks() {
+    if (this.selectedFilter === 'Active') {
+      this.filteredTaskList = this.taskList.filter(t => t.taskStatus === true);
+    } else if (this.selectedFilter === 'Completed') {
+      this.filteredTaskList = this.taskList.filter(t => t.taskStatus === false);
+    } else {
+      this.filteredTaskList = [...this.taskList];
+    }
+  }
 }
